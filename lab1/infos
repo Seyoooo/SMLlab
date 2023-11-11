@@ -1,0 +1,14 @@
+HOPSWORKS_API_KEY
+-> faire un .sh file
+
+for deploying modal deploy iris-feature ... 
+
+with github
+
+create a yaml to put in the workflows ... (check repo of the lab for the yaml?)
+mkdir -p .github/workflows
+make a sh file to run
+
+gradio run.py
+each space have their own API keys
+I think you should push the hugging files from the lab repo to your own huggingface repo. Don't forget to add HOPSWORKS_API_KEY in huggingface

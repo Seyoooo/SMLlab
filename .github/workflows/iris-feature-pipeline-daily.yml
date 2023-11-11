@@ -3,7 +3,7 @@ name: iris-feature-pipeline-daily
 on:
   workflow_dispatch:
   schedule:
-    - cron: '11 11 * * *'
+    - cron: '19 57 * * *'
 
 jobs:
   test_schedule:
@@ -15,7 +15,7 @@ jobs:
       - name: setup python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.10.0'
+          python-version: '3..0'
           
       - name: install python packages
         run: |

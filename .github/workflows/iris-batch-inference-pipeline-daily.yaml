@@ -1,4 +1,4 @@
-name: iris-feature-pipeline-daily
+name: iris-batch-inference-pipeline-daily
 
 on:
   workflow_dispatch:

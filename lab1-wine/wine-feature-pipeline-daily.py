@@ -18,10 +18,8 @@ def generate_wine(quality : float, wine_fg):
     """
     Returns a single wine as a single row in a DataFrame
     """
-    columns = ['type','fixed_acidity', 'volatile_acidity', 'citric_acid', \
-               'residual_sugar', 'chlorides', 'free_sulfur_dioxide', \
-                'total_sulfur_dioxide', 'density', 'ph', 'sulphates', \
-                'alcohol']
+    columns = ['type', 'volatile_acidity', 'citric_acid', 'chlorides',
+       'free_sulfur_dioxide', 'density', 'alcohol']
 
     wine_dict = {'quality' : quality}
     for col in columns:

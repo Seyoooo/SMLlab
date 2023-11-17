@@ -23,11 +23,11 @@ def g():
     import seaborn as sns
     import requests
 
-    project = hopsworks.login()
+    project = hopsworks.login(api_key_value="ARdEXH44yRPeZQ1b.AsWjkxrU80UT2kQn4eyArSOBpmrjft3xlY7Ts47fBajpWEE6NdkMKFkBrgYkXrzu")
     fs = project.get_feature_store()
     
     mr = project.get_model_registry()
-    model = mr.get_model("wine_model", version=1)
+    model = mr.get_model("wine_model", version=2)
     model_dir = model.download()
     model = joblib.load(model_dir + "/wine_model.pkl")
     
@@ -35,20 +35,19 @@ def g():
     batch_data = feature_view.get_batch_data()
     
     y_pred = model.predict(batch_data)
-    #print(y_pred)
     offset = 1
     wine_sample = y_pred[y_pred.size-offset]
     # wine_sample_url = "https://raw.githubusercontent.com/featurestoreorg/serverless-ml-course/main/src/01-module/assets/" + wine_sample + ".png"
-    # print("Wine predicted: " + wine_sample)
+    print(f"Wine quality prediction : {wine_sample}")
     # img = Image.open(requests.get(wine_sample_url, stream=True).raw)            
     # img.save("./latest_wine.png")
-    # dataset_api = project.get_dataset_api()    
+    dataset_api = project.get_dataset_api()    
     # dataset_api.upload("./latest_wine.png", "Resources/images", overwrite=True)
    
     wine_fg = fs.get_feature_group(name="wine", version=1)
     df = wine_fg.read() 
     #print(df)
-    label = df.iloc[-offset]["type"]
+    label = df.iloc[-offset]["quality"]
     # label_url = "https://raw.githubusercontent.com/featurestoreorg/serverless-ml-course/main/src/01-module/assets/" + label + ".png"
     # print("Wine actual: " + label)
     # img = Image.open(requests.get(label_url, stream=True).raw)            
@@ -63,7 +62,7 @@ def g():
     
     now = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
     data = {
-        'prediction': [wine],
+        'prediction': [wine_sample],
         'label': [label],
         'datetime': [now],
        }
@@ -83,9 +82,12 @@ def g():
     predictions = history_df[['prediction']]
     labels = history_df[['label']]
 
-    # Only create the confusion matrix when our iris_predictions feature group has examples of all 3 iris flowers
-    print("Number of different wine predictions to date: " + str(predictions.value_counts().count()))
-    if predictions.value_counts().count() == 3:
+    print()
+    print(predictions.value_counts().count())
+    print()
+
+    # Only create the confusion matrix when our wine_predictions feature group has examples of all all qualities (3 to 9)
+    if predictions.value_counts().count() == 7:
         results = confusion_matrix(labels, predictions)
     
         df_cm = pd.DataFrame(results, ['True white', 'True red'],['Pred white', 'Pred red'])

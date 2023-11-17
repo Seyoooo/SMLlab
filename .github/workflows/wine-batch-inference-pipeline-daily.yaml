@@ -1,4 +1,4 @@
-name: iris-batch-inference-pipeline-daily
+name: wine-batch-inference-pipeline-daily
 
 on:
   workflow_dispatch:

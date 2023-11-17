@@ -97,8 +97,8 @@ def g():
         fig.savefig("./confusion_matrix.png")
         dataset_api.upload("./confusion_matrix.png", "Resources/images", overwrite=True)
     else:
-        print("You need 3 different wine predictions to create the confusion matrix.")
-        print("Run the batch inference pipeline more times until you get 3 different wine predictions") 
+        print("You need 7 different wine qualities to create the confusion matrix.")
+        print("Run the batch inference pipeline more times until you get 7 different wine predictions") 
 
 
 if __name__ == "__main__":

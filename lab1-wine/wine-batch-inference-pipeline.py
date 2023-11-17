@@ -82,10 +82,6 @@ def g():
     predictions = history_df[['prediction']]
     labels = history_df[['label']]
 
-    print()
-    print(predictions.value_counts().count())
-    print()
-
     # Only create the confusion matrix when our wine_predictions feature group has examples of all all qualities (3 to 9)
     if predictions.value_counts().count() == 7:
         results = confusion_matrix(labels, predictions)

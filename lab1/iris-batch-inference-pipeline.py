@@ -32,48 +32,43 @@ def g():
     model = joblib.load(model_dir + "/iris_model.pkl")
     
     feature_view = fs.get_feature_view(name="iris", version=1)
+    batch_data = feature_view.get_batch_data()
+    
+    y_pred = model.predict(batch_data)
+    #print(y_pred)
+    offset = 1
+    flower = y_pred[y_pred.size-offset]
+    flower_url = "https://raw.githubusercontent.com/featurestoreorg/serverless-ml-course/main/src/01-module/assets/" + flower + ".png"
+    print("Flower predicted: " + flower)
+    img = Image.open(requests.get(flower_url, stream=True).raw)            
+    img.save("./latest_iris.png")
+    dataset_api = project.get_dataset_api()    
+    dataset_api.upload("./latest_iris.png", "Resources/images", overwrite=True)
+   
+    iris_fg = fs.get_feature_group(name="iris", version=1)
+    df = iris_fg.read() 
+    #print(df)
+    label = df.iloc[-offset]["variety"]
+    label_url = "https://raw.githubusercontent.com/featurestoreorg/serverless-ml-course/main/src/01-module/assets/" + label + ".png"
+    print("Flower actual: " + label)
+    img = Image.open(requests.get(label_url, stream=True).raw)            
+    img.save("./actual_iris.png")
+    dataset_api.upload("./actual_iris.png", "Resources/images", overwrite=True)
     
     monitor_fg = fs.get_or_create_feature_group(name="iris_predictions",
                                                 version=1,
                                                 primary_key=["datetime"],
                                                 description="Iris flower Prediction/Outcome Monitoring"
                                                 )
-
-
-    dataset_api = project.get_dataset_api()   
-
-    for _ in range(100):
-        batch_data = feature_view.get_batch_data()
     
-        y_pred = model.predict(batch_data)
-        #print(y_pred)
-        offset = 1
-        flower = y_pred[y_pred.size-offset]
-        flower_url = "https://raw.githubusercontent.com/featurestoreorg/serverless-ml-course/main/src/01-module/assets/" + flower + ".png"
-        print("Flower predicted: " + flower)
-        img = Image.open(requests.get(flower_url, stream=True).raw)            
-        img.save("./latest_iris.png") 
-        dataset_api.upload("./latest_iris.png", "Resources/images", overwrite=True)
-    
-        iris_fg = fs.get_feature_group(name="iris", version=1)
-        df = iris_fg.read() 
-        #print(df)
-        label = df.iloc[-offset]["variety"]
-        label_url = "https://raw.githubusercontent.com/featurestoreorg/serverless-ml-course/main/src/01-module/assets/" + label + ".png"
-        print("Flower actual: " + label)
-        img = Image.open(requests.get(label_url, stream=True).raw)            
-        img.save("./actual_iris.png")
-        dataset_api.upload("./actual_iris.png", "Resources/images", overwrite=True)
-        
-        
-        now = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-        data = {
-            'prediction': [flower],
-            'label': [label],
-            'datetime': [now],
-        }
-        monitor_df = pd.DataFrame(data)
-        monitor_fg.insert(monitor_df, write_options={"wait_for_job" : False})
+    now = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+    data = {
+        'prediction': [flower],
+        'label': [label],
+        'datetime': [now],
+       }
+    monitor_df = pd.DataFrame(data)
+    monitor_fg.insert(monitor_df, write_options={"wait_for_job" : False})
     
     history_df = monitor_fg.read(read_options={"use_hive": True})
     # Add our prediction to the history, as the history_df won't have it - 

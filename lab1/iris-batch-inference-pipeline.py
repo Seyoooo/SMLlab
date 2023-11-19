@@ -33,6 +33,12 @@ def g():
     
     feature_view = fs.get_feature_view(name="iris", version=1)
     
+    monitor_fg = fs.get_or_create_feature_group(name="iris_predictions",
+                                                version=1,
+                                                primary_key=["datetime"],
+                                                description="Iris flower Prediction/Outcome Monitoring"
+                                                )
+
     for _ in range(100):
         batch_data = feature_view.get_batch_data()
     
@@ -57,11 +63,6 @@ def g():
         img.save("./actual_iris.png")
         dataset_api.upload("./actual_iris.png", "Resources/images", overwrite=True)
         
-        monitor_fg = fs.get_or_create_feature_group(name="iris_predictions",
-                                                    version=1,
-                                                    primary_key=["datetime"],
-                                                    description="Iris flower Prediction/Outcome Monitoring"
-                                                    )
         
         now = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
         data = {

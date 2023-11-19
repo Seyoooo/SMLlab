@@ -39,6 +39,9 @@ def g():
                                                 description="Iris flower Prediction/Outcome Monitoring"
                                                 )
 
+
+    dataset_api = project.get_dataset_api()   
+
     for _ in range(100):
         batch_data = feature_view.get_batch_data()
     
@@ -49,8 +52,7 @@ def g():
         flower_url = "https://raw.githubusercontent.com/featurestoreorg/serverless-ml-course/main/src/01-module/assets/" + flower + ".png"
         print("Flower predicted: " + flower)
         img = Image.open(requests.get(flower_url, stream=True).raw)            
-        img.save("./latest_iris.png")
-        dataset_api = project.get_dataset_api()    
+        img.save("./latest_iris.png") 
         dataset_api.upload("./latest_iris.png", "Resources/images", overwrite=True)
     
         iris_fg = fs.get_feature_group(name="iris", version=1)

@@ -2,7 +2,7 @@
 
 **Course:** Scalable Machine Learning and Deep Learning - Lab 1
 
-**Team**: Iga Pawlak, Julien Horvat
+**Team Limoncello**: Iga Pawlak, Julien Horvat
 
 ## 1. Iris flower prediction
 

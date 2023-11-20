@@ -8,8 +8,8 @@
 
 This part was already entirely coded. We created a Hopsworks shared project and ran the dataset creation notebook and the training notebook, managing the Hopsworks secret key. Then we add the key on github and set up the daily routines with github action. They are both working on this directory and triggered once a day. 
 Finally, we launched two `huggingface` apps : 
-* [Iris prediction app](https://huggingface.co/spaces/PiJul/Iris_prediction), which import the model from hopsworks and infer on the set of values chosen by the user on the web interface.
-* [Iris inference monitor](https://huggingface.co/spaces/PiJul/Iris-monitor), which summarize the latest predictions made by the batch routine, as well as ploting a confusion matrix.
+* [Iris prediction app](https://huggingface.co/spaces/PiJul/Iris_prediction), which import the model from hopsworks and perform infer on the set of values chosen by the user on the web interface.
+* [Iris inference monitor](https://huggingface.co/spaces/PiJul/Iris-monitor), which summarize the latest predictions made by the batch routine, as well as plotting a confusion matrix.
 
 ## 2. Wine quality prediction 
 ### 2.1. Feature group creation and feature engineering 

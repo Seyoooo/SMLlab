@@ -48,7 +48,7 @@ def g():
     df = wine_fg.read()
     label = df.iloc[-offset]["quality"]
     label_url = f"https://huggingface.co/spaces/pigieligi/Wine_quality_prediction/resolve/main/wine-imgs/red/{int(label)}-red.jpg"
-    print("Wine actual: " + label)
+    print("Wine actual: " + str(label))
     img = Image.open(requests.get(label_url, stream=True).raw)            
     img.save("./actual_wine.png")
     dataset_api.upload("./actual_wine.png", "Resources/images", overwrite=True)

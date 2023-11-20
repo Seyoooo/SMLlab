@@ -37,13 +37,21 @@ def g():
     y_pred = model.predict(batch_data)
     offset = 1
     wine_sample = y_pred[y_pred.size-offset]
+    wine_sample_url = f"https://huggingface.co/spaces/pigieligi/Wine_quality_prediction/resolve/main/wine-imgs/red/{int(wine_sample)}-red.jpg"
     print(f"Wine quality prediction : {wine_sample}")
+    img = Image.open(requests.get(wine_sample_url, stream=True).raw)            
+    img.save("./latest_wine.png")
     dataset_api = project.get_dataset_api()    
+    dataset_api.upload("./latest_wine.png", "Resources/images", overwrite=True)
    
     wine_fg = fs.get_feature_group(name="wine", version=1)
-    df = wine_fg.read() 
+    df = wine_fg.read()
     label = df.iloc[-offset]["quality"]
-
+    label_url = f"https://huggingface.co/spaces/pigieligi/Wine_quality_prediction/resolve/main/wine-imgs/red/{int(label)}-red.jpg"
+    # print("Wine actual: " + label)
+    # img = Image.open(requests.get(label_url, stream=True).raw)            
+    # img.save("./actual_wine.png")
+    # dataset_api.upload("./actual_wine.png", "Resources/images", overwrite=True)
     
     monitor_fg = fs.get_or_create_feature_group(name="wine_predictions",
                                                 version=1,

@@ -38,6 +38,7 @@ We ran the experiments for both methods for the number of features $K = 2, ..., 
 We can see that from $3$ features we already get an accuracy of over $90\%$. We have decided to use `RFE` with $7$ features. 
 
 **2.1.3 Uploading to a Feature Group**
+
 The data frame has been uploaded to a `wine` Feature Group in our Hopsworks project. 
 ### 2.2 Feature daily pipeline
 Generates random samples of wine of a given quality. The quality is randomly chosen from the values present in the data, from $3$ to $9$. Then the value in each column is also randomly selected from the values in this column present for existing samples with a given quality. 

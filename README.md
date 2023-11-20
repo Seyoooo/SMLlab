@@ -60,6 +60,8 @@ The model has been uploaded to the model registry as `wine_model` in our Hopswor
 
 ### 2.3 Batch inference pipeline 
 
+This time we import the pictures from or `Huggingface` repository. The new prediction is stored in wine_predictions feature group.
+
 ### 2.4 Wine quality prediction app 
 
 We have created an app on `Huggingface` available [here](https://huggingface.co/spaces/PiJul/Wine_quality_prediction) similar to the one for the Iris flower prediction. The user can input a value for each feature and the default values are simply averages for each column in the entire data frame. 
@@ -67,3 +69,4 @@ Upon prediction a picture with the result is displayed. ![obraz|400](https://git
 
 ### 2.5 Wine prediction monitor app
 
+You can find the monitor app [here](https://huggingface.co/spaces/PiJul/WineMonitor).

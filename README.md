@@ -49,7 +49,7 @@ Therefore, to provide for effective training we used a `RandomOverSampler` that 
 
 **2.3.2. Model selection**
 
-We have tested three models - `KNeighborsClassifier`, `RandomForestClassifier` and `AdaBoostClassifier` and found that the second one provides the best results.  This was the model trained on the dataset and achieving XX accuracy on the test set. 
+We have tested three models - `KNeighborsClassifier`, `RandomForestClassifier` and `AdaBoostClassifier` and found that the second one provides the best results.  This was the model trained on the dataset and achieving around 90% accuracy on the test set. 
 
 **2.3.3. Uploading the model**
 

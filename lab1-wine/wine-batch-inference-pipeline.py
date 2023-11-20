@@ -27,7 +27,7 @@ def g():
     fs = project.get_feature_store()
     
     mr = project.get_model_registry()
-    model = mr.get_model("wine_model", version=2)
+    model = mr.get_model("wine_model", version=1)
     model_dir = model.download()
     model = joblib.load(model_dir + "/wine_model.pkl")
     
@@ -37,22 +37,13 @@ def g():
     y_pred = model.predict(batch_data)
     offset = 1
     wine_sample = y_pred[y_pred.size-offset]
-    # wine_sample_url = "https://raw.githubusercontent.com/featurestoreorg/serverless-ml-course/main/src/01-module/assets/" + wine_sample + ".png"
     print(f"Wine quality prediction : {wine_sample}")
-    # img = Image.open(requests.get(wine_sample_url, stream=True).raw)            
-    # img.save("./latest_wine.png")
     dataset_api = project.get_dataset_api()    
-    # dataset_api.upload("./latest_wine.png", "Resources/images", overwrite=True)
    
     wine_fg = fs.get_feature_group(name="wine", version=1)
     df = wine_fg.read() 
-    #print(df)
     label = df.iloc[-offset]["quality"]
-    # label_url = "https://raw.githubusercontent.com/featurestoreorg/serverless-ml-course/main/src/01-module/assets/" + label + ".png"
-    # print("Wine actual: " + label)
-    # img = Image.open(requests.get(label_url, stream=True).raw)            
-    # img.save("./actual_wine.png")
-    # dataset_api.upload("./actual_wine.png", "Resources/images", overwrite=True)
+
     
     monitor_fg = fs.get_or_create_feature_group(name="wine_predictions",
                                                 version=1,

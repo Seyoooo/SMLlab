@@ -18,8 +18,8 @@ def generate_wine(quality : float, wine_fg):
     """
     Returns a single wine as a single row in a DataFrame
     """
-    columns = ['type', 'volatile_acidity', 'citric_acid', 'chlorides',
-       'free_sulfur_dioxide', 'density', 'alcohol']
+    columns = ['volatile_acidity', 'residual_sugar', 'chlorides',
+       'total_sulfur_dioxide', 'density', 'sulphates', 'alcohol']
 
     wine_dict = {'quality' : quality}
     for col in columns:
@@ -54,7 +54,7 @@ def g():
     import hopsworks
     import pandas as pd
 
-    project = hopsworks.login()
+    project = hopsworks.login(api_key_value="RhZB20y7YUun5HUf.magj2ktWRWYpeAQ3Se3F1Dw13r2GLa14vi2huErtL8XZi9UuvpnRVXXQHgiGQX9d")
     fs = project.get_feature_store()
     wine_fg = fs.get_feature_group(name='wine', version = 1)
     wine_df = get_random_wine_sample(wine_fg)

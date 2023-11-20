@@ -48,10 +48,10 @@ def g():
     df = wine_fg.read()
     label = df.iloc[-offset]["quality"]
     label_url = f"https://huggingface.co/spaces/pigieligi/Wine_quality_prediction/resolve/main/wine-imgs/red/{int(label)}-red.jpg"
-    # print("Wine actual: " + label)
-    # img = Image.open(requests.get(label_url, stream=True).raw)            
-    # img.save("./actual_wine.png")
-    # dataset_api.upload("./actual_wine.png", "Resources/images", overwrite=True)
+    print("Wine actual: " + label)
+    img = Image.open(requests.get(label_url, stream=True).raw)            
+    img.save("./actual_wine.png")
+    dataset_api.upload("./actual_wine.png", "Resources/images", overwrite=True)
     
     monitor_fg = fs.get_or_create_feature_group(name="wine_predictions",
                                                 version=1,
@@ -85,7 +85,10 @@ def g():
     if predictions.value_counts().count() == 7:
         results = confusion_matrix(labels, predictions)
     
-        df_cm = pd.DataFrame(results, ['True white', 'True red'],['Pred white', 'Pred red'])
+        true_annotations = [f'True {q}' for q in range(3, 10)]
+        pred_annotations = [f'Pred {q}' for q in range(3, 10)]
+
+        df_cm = pd.DataFrame(results, true_annotations, pred_annotations)
     
         cm = sns.heatmap(df_cm, annot=True)
         fig = cm.get_figure()

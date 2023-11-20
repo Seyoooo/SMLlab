@@ -6,6 +6,8 @@
 
 ## 1. Iris flower prediction
 
+This part was already entirely coded. We created a Hopsworks shared project and ran the dataset creation notebook and the training notebook. 
+
 
 ## 2. Wine quality prediction 
 ### 2.1. Feature group creation and feature engineering 

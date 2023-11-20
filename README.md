@@ -9,6 +9,8 @@
 This part was already entirely coded. We created a Hopsworks shared project and ran the dataset creation notebook and the training notebook. 
 
 
+We then launched the `huggingface` app prediction [here](https://huggingface.co/spaces/PiJul/Iris_prediction), which import the model from hopsworks and infer on the set of values chosen by the user on the web interface.
+
 ## 2. Wine quality prediction 
 ### 2.1. Feature group creation and feature engineering 
 

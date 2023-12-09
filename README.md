@@ -2,10 +2,14 @@
 
 **Course:** Scalable Machine Learning and Deep Learning - Lab 1
 
-**Team**: Iga Pawlak, Julien Horvat
+**Team Limoncello**: Iga Pawlak, Julien Horvat
 
-## 1. Iris flower prediction
+## 1. Iris flower pipeline
 
+This part was already entirely coded. We created a Hopsworks shared project and ran the dataset creation notebook and the training notebook, managing the Hopsworks secret key. Then we add the key on `Github` and set up the daily routines with `Github action`. They are both working on this directory and triggered once a day. 
+Finally, we launched two `huggingface` apps : 
+* [Iris prediction app](https://huggingface.co/spaces/PiJul/Iris_prediction), which import the model from hopsworks and perform infer on the set of values chosen by the user on the web interface.
+* [Iris inference monitor](https://huggingface.co/spaces/PiJul/Iris-monitor), which summarize the latest predictions made by the batch routine, as well as plotting a confusion matrix.
 
 ## 2. Wine quality prediction 
 ### 2.1. Feature group creation and feature engineering 
@@ -33,9 +37,10 @@ We ran the experiments for both methods for the number of features $K = 2, ..., 
 | 8 | 0.9257114077058676 | 0.9151347267690758 | 
 | 9 | 0.9277260135985897 | 0.9347771342231176 | 
 
-We can see that from $3$ features we already get an accuracy of over $90\%$. We have decided to use `RFE` with $7$ features. 
+We can see that from $3$ features we already get an accuracy of over $90$%. We have decided to use `RFE` with $7$ features. 
 
 **2.1.3 Uploading to a Feature Group**
+
 The data frame has been uploaded to a `wine` Feature Group in our Hopsworks project. 
 ### 2.2 Feature daily pipeline
 Generates random samples of wine of a given quality. The quality is randomly chosen from the values present in the data, from $3$ to $9$. Then the value in each column is also randomly selected from the values in this column present for existing samples with a given quality. 
@@ -47,7 +52,7 @@ Therefore, to provide for effective training we used a `RandomOverSampler` that 
 
 **2.3.2. Model selection**
 
-We have tested three models - `KNeighborsClassifier`, `RandomForestClassifier` and `AdaBoostClassifier` and found that the second one provides the best results.  This was the model trained on the dataset and achieving XX accuracy on the test set. 
+We have tested three models - `KNeighborsClassifier`, `RandomForestClassifier` and `AdaBoostClassifier` and found that the second one provides the best results.  This was the model trained on the dataset and achieving around 90\% accuracy on the test set. 
 
 **2.3.3. Uploading the model**
 
@@ -55,10 +60,14 @@ The model has been uploaded to the model registry as `wine_model` in our Hopswor
 
 ### 2.3 Batch inference pipeline 
 
+This time we import the pictures from or `Huggingface` repository. The new prediction is stored in wine_predictions feature group.
+
 ### 2.4 Wine quality prediction app 
 
 We have created an app on `Huggingface` available [here](https://huggingface.co/spaces/PiJul/Wine_quality_prediction) similar to the one for the Iris flower prediction. The user can input a value for each feature and the default values are simply averages for each column in the entire data frame. 
-Upon prediction a picture with the result is displayed. ![obraz|400](https://github.com/Seyoooo/SMLlab/assets/36933957/ce568bc8-a466-4844-9fd4-e1507da721e3)
+Upon prediction a picture with the result is displayed. ![obraz](https://github.com/Seyoooo/SMLlab/assets/36933957/33ed3bee-77f7-4574-b739-9fbb76fc4d43)
+
 
 ### 2.5 Wine prediction monitor app
 
+You can find the monitor app [here](https://huggingface.co/spaces/PiJul/WineMonitor). It displays the last prediction made by the daily batch inference routine running on `Github`, the recent inference as well as a confusion matrix. 
